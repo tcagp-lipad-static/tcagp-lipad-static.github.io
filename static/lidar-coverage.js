@@ -89,7 +89,19 @@ window.onload=function(){
   L.control.layers(baseMaps, overlays, {collapsed: false}).addTo(map);
   L.control.scale({position: 'bottomright'}).addTo(map);
 
-  
+  var citySearch = new L.Control.Search({
+		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat','lon'],
+		marker: L.circleMarker([0,0],{radius:30}),
+		autoCollapse: true,
+		autoType: false,
+		minLength: 2
+	});
+   citySearch.addTo(map);
+
+
   var loc_map = L.map('map-canvas').setView([14.65668, 121.07116], 18);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy;' + n + ' <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',

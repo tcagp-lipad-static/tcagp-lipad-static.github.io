@@ -28,6 +28,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css">
+	<link rel="stylesheet" type="text/css" href="/static/leaflet-search.css">
+	<script type="text/javascript" src="/static/leaflet-search.js"></script>
 	<script type="text/javascript" src="/static/lidar-coverage.js"></script>
 	<style>
 		body {font-family: 'Roboto', sans-serif}
@@ -38,6 +40,14 @@
 		#navMobile {
 			z-index: 3;
 		}
+.search-input {
+	font-family:Courier
+}
+.search-input,
+.leaflet-control-search {
+	max-width:400px;
+}
+
 	</style>
 </head>
 <body>
@@ -134,10 +144,10 @@
 				</div>
 				<h3>Flood Hazard Maps</h3>
 				<p>Flood Hazard Maps are still available at the <a href="https://lipad-fmc.dream.upd.edu.ph/layers/?limit=100&offset=0&keywords__slug__in=flood-hazard-map">LiPAD FMC website</a>, without registration. Please proceed to the FMC sub-website if you are interested on downloading Flood Hazard Maps. </p>
-
+				<hr>
 				<h3>Resource Maps</h3>
 				<p>Resource Maps are available on their respective portals produced by the components of the PHIL-LiDAR 2 Program. Please see the RESOURCE MAPS menu above if you are interested on obtaining resource maps.</p>
-
+				<hr>
 				<h3>Manual Data Requests</h3>
 
 				<p class="w3-left-align"> Since the LiPAD Portal is under maintenance, may we request all data requests be coursed through the following Google Forms:</p>
