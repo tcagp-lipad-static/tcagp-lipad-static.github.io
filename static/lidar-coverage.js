@@ -94,12 +94,18 @@ window.onload=function(){
 		jsonpParam: 'json_callback',
 		propertyName: 'display_name',
 		propertyLoc: ['lat','lon'],
-		marker: L.circleMarker([0,0],{radius:30}),
 		autoCollapse: true,
 		autoType: false,
-		minLength: 2
+		minLength: 2,
+    marker: false,
+    moveToLocation: function(latlng) {
+        map.setView(latlng, 12); // set the zoom
+    },
 	});
+  
    citySearch.addTo(map);
+
+
 
 
   var loc_map = L.map('map-canvas').setView([14.65668, 121.07116], 18);

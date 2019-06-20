@@ -30,7 +30,7 @@
 	margin:4px 0 4px 4px;
 }
 .leaflet-control-search.search-load .search-input {
-	background: url('/static/loader.gif') no-repeat center right #fff;
+	background: url('../images/loader.gif') no-repeat center right #fff;
 }
 .leaflet-control-search.search-load .search-cancel {
 	visibility:hidden;
@@ -66,11 +66,11 @@
 	float:left;
 	width:30px;
 	height:30px;	
-	background: url('/static/search-icon.png') no-repeat 4px 4px #fff;
+	background: url('../images/search-icon.png') no-repeat 4px 4px #fff;
 	border-radius:4px;
 }
 .leaflet-control-search .search-button:hover {
-	background: url('/static/search-icon.png') no-repeat 4px -20px #fafafa;
+	background: url('../images/search-icon.png') no-repeat 4px -20px #fafafa;
 }
 .leaflet-control-search .search-tooltip {
 	position:absolute;
