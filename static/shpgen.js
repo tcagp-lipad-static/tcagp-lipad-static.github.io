@@ -57,6 +57,23 @@ window.onload=function(){
   L.control.layers(baseMaps, overlays, {collapsed: false}).addTo(map);
   L.control.attribution({prefix: 'Made with <a href="https://leafletjs.org">Leaflet</a>, <a href="https://github.com/mapbox/shp-write">shp-write</a>, and <a href="http://browserify.org/">browserify</a>'}).addTo(map);
   L.control.scale({position: 'bottomright'}).addTo(map);
+
+  var citySearch = new L.Control.Search({
+    url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+    jsonpParam: 'json_callback',
+    propertyName: 'display_name',
+    propertyLoc: ['lat','lon'],
+    autoCollapse: true,
+    autoType: false,
+    minLength: 2,
+    marker: false,
+    moveToLocation: function(latlng) {
+        map.setView(latlng, 12); // set the zoom
+    },
+  });
+  
+  citySearch.addTo(map);
+
   // Initialise the FeatureGroup to store editable layers
   var editableLayers = new L.FeatureGroup();
   map.addLayer(editableLayers);
