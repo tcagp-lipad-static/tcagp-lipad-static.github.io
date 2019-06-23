@@ -16,7 +16,7 @@ window.onload=function(){
 
   tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
     ptype: "gxp_wmsgetfeatureinfo",
-    layers: 'geonode:philgrid',
+    layers: 'lipad:philgrid',
     format: 'image/png',
     transparent: true,
     'opacity':1,
