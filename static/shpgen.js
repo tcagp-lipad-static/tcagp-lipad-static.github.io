@@ -1,8 +1,6 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 window.onload=function(){
-  var d = new Date();
-  var n = d.getFullYear();
-  // center of the map
+  
   var center = [13.0933418, 121.4767572];
   var bbox = [116.22307468566594,4.27103012208686,127.09228398538997,21.2510169394873];
   var bounds = [
@@ -13,14 +11,20 @@ window.onload=function(){
   var map = L.map('map',{attributionControl: false, center: center, zoom: 6,minZoom: 6, maxZoom: 18, maxBounds: bounds, maxBoundsViscosity: 1}).setView(center, 6);
   map.fitBounds(bounds);
 
-  // Set up the OSM layer
-  osm_map = L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data ©'+ n +' <a href="http://osm.org/copyright">OpenStreetMap</a> and contributors',
-      maxZoom: 18
-    }).addTo(map).bringToBack();
 
-  tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
+L.control.attribution({prefix: 'Made with <a href="https://leafletjs.org">Leaflet</a>, <a href="https://github.com/mapbox/shp-write">shp-write</a>, and <a href="http://browserify.org/">browserify</a>'}).addTo(map);
+
+// Set up the OSM layer
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data CC BY-SA © <a href="http://osm.org/copyright">OpenStreetMap</a> and contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+// add a marker in the given location
+// L.marker(center).addTo(map);
+
+tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
     ptype: "gxp_wmsgetfeatureinfo",
     layers: 'lipad:philgrid',
     format: 'image/png',
@@ -31,28 +35,67 @@ window.onload=function(){
     continuousWorld: true,
   }).addTo(map).bringToFront();
 
-  var baseMaps = {
-    'OpenStreetMap' : osm_map
-  };
-  var overlays = {
-    'Data Coverage': tile_layer
-  };
-  // L.control.layers(overlays, null, {collapsed: false}).addTo(map);
-  //map.layerscontrol.removeFrom(map);
+// Initialise the FeatureGroup to store editable layers
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
 
-  var legend = L.control({position:'bottomleft'});
-  legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML += '<div class="w3-white"><p class="w3-medium"> Legend: </p><p><img id="legend_icon" src="static/philgrid_legend.png"></p></div>';
-    return div;
-  };
+var drawPluginOptions = {
+  draw: {
+    polygon: {
+      allowIntersection: false, // Restricts shapes to simple polygons
+      drawError: {
+        color: '#e1e100', // Color the shape will turn when intersects
+        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+      },
+      shapeOptions: {
+        color: '#97009c'
+      }
+    },
+    // disable toolbar item by setting it to false
+    polyline: false,
+    circle: false, // Turns off this drawing tool
+    rectangle: false,
+    marker: false,
+    },
+};
 
-  legend.addTo(map);
+// Initialise the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw(drawPluginOptions);
+map.addControl(drawControl);
 
-  L.control.layers(baseMaps, overlays, {collapsed: false}).addTo(map);
-  L.control.attribution({prefix: 'Made with <a href="https://leafletjs.org">Leaflet</a>, <a href="https://github.com/mapbox/shp-write">shp-write</a>, and <a href="http://browserify.org/">browserify</a>'}).addTo(map);
-  L.control.scale({position: 'bottomright'}).addTo(map);
-  var geocoder = L.Control.geocoder({
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+var exportButton =  new L.easyButton( 'fa-download', function(control){
+  var options = {
+    folder: 'shapefile',
+    types: {
+      point: 'points',
+      polygon: 'polygons'
+    }
+  }
+  var shpwrite = require('shp-write');
+  var fggeojson = editableLayers.toGeoJSON();
+  shpwrite.download(fggeojson, options);
+}, 'Download shapefile');
+map.addControl(exportButton);
+
+exportButton.disable();
+
+map.on('draw:created', function(e) {
+  var type = e.layerType,
+    layer = e.layer;
+
+  if (type === 'marker') {
+    layer.bindPopup('A popup!');
+  }
+ 
+  editableLayers.addLayer(layer);
+  exportButton.enable();
+
+});
+
+var geocoder = L.Control.geocoder({
     geocoder: L.Control.Geocoder.nominatim({
           geocodingQueryParams: {countrycodes: 'ph'}
       }),
@@ -65,74 +108,10 @@ window.onload=function(){
     })
     .addTo(map);
 
-  // Initialise the FeatureGroup to store editable layers
-  var editableLayers = new L.FeatureGroup();
-  map.addLayer(editableLayers);
-
-  var drawPluginOptions = {
-    draw: {
-      polygon: {
-        allowIntersection: false, // Restricts shapes to simple polygons
-        drawError: {
-          color: '#e1e100', // Color the shape will turn when intersects
-          message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-        },
-        shapeOptions: {
-          color: '#97009c'
-        }
-      },
-      // disable toolbar item by setting it to false
-      polyline: false,
-      circle: false, // Turns off this drawing tool
-      rectangle: true,
-      marker: false,
-      circlemarker: false,
-    },
-    edit: {
-      featureGroup: editableLayers
-    }
-  };
-
-  // Initialise the draw control and pass it the FeatureGroup of editable layers
-  var drawControl = new L.Control.Draw(drawPluginOptions);
-  map.addControl(drawControl);
-
-
-  var exportButton =  new L.easyButton( 'fa-download', function(control){
-    var options = {
-      folder: 'shapefile',
-      types: {
-        point: 'points',
-        polygon: 'polygons'
-      }
-    }
-    var shpwrite = require('shp-write');
-    var fggeojson = editableLayers.toGeoJSON();
-    shpwrite.download(fggeojson, options);
-  }, 'Download shapefile');
-  map.addControl(exportButton);
-
-  exportButton.disable();
-
-  map.on('draw:created', function(e) {
-    var type = e.layerType,
-    layer = e.layer;
-
-    if (type === 'marker') {
-      layer.bindPopup('A popup!');
-    }
-
-    editableLayers.addLayer(layer);
-    exportButton.enable();
-
-  });
-
-
-
-  var exportShp= function(){
+var exportShp= function(){
   // (optional) set names for feature types and zipped folder
   var options = {
-    folder: 'shapefile',
+    folder: false,
     types: {
       point: 'points',
       polygon: 'polygons'
@@ -141,10 +120,13 @@ window.onload=function(){
   var shpwrite = require('shp-write');
   var fggeojson = editableLayers.toGeoJSON();
   shpwrite.download(fggeojson, options);
-  };
-  var export_button = document.getElementById("export");
-  var domevent = L.DomEvent.on(export_button, 'click', exportShp);
-}
+};
+
+L.DomEvent.on(document.getElementById("export"), 'click', exportShp);
+
+    }
+
+
 
 
 },{"shp-write":7}],2:[function(require,module,exports){
@@ -9760,9 +9742,8 @@ module.exports = ZStream;
 var zip = require('./zip');
 
 module.exports = function(gj, options) {
-  zip(gj, options).then(function(content) {
+    var content = zip(gj, options);
     location.href = 'data:application/zip;base64,' + content;
-  });
 };
 
 },{"./zip":56}],48:[function(require,module,exports){
@@ -10126,7 +10107,12 @@ var write = require('./write'),
 module.exports = function(gj, options) {
 
     var zip = new JSZip(),
+        layers = zip.folder(options && options.folder ? options.folder : 'layers');
+         // if options.folder is set to false, zip files without a folder
+    if (options && options.folder === false) {
         layers = zip;
+    }
+
 
     [geojson.point(gj), geojson.line(gj), geojson.polygon(gj)]
         .forEach(function(l) {
@@ -10148,13 +10134,13 @@ module.exports = function(gj, options) {
         }
     });
 
-    var generateOptions = { compression:'STORE', type:'base64' };
+    var generateOptions = { compression:'STORE' };
 
     if (!process.browser) {
       generateOptions.type = 'nodebuffer';
     }
 
-    return zip.generateAsync(generateOptions);
+    return zip.generate(generateOptions);
 };
 
 }).call(this,require('_process'))
