@@ -1,18 +1,14 @@
-function zoom_to_box(map, bbox){
-  var bounds = [
-  [bbox[1], bbox[0]],
-  [bbox[3], bbox[2]]
-  ];
-  map.fitBounds(bounds);
-//map.zoomIn(0);
-}
-
 window.onload=function(){
   var d = new Date();
   var n = d.getFullYear();
   var center = [13.0933418, 121.4767572];
-  var map = L.map('map').setView(center, 6);;
-  zoom_to_box(map, [117.17427453, 5.58100332277, 126.537423944, 18.5052273625]);
+  var bbox = [116.22307468566594,4.27103012208686,127.09228398538997,21.2510169394873];
+  var bounds = [
+  [bbox[1], bbox[0]],
+  [bbox[3], bbox[2]]
+  ];
+  var map = L.map('map', {center: center, zoom: 6,minZoom: 6, maxZoom: 18, maxBounds: bounds, maxBoundsViscosity: 1}).setView(center, 6);
+  map.fitBounds(bounds);
 
   tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
     ptype: "gxp_wmsgetfeatureinfo",
@@ -89,23 +85,18 @@ window.onload=function(){
   L.control.layers(baseMaps, overlays, {collapsed: false}).addTo(map);
   L.control.scale({position: 'bottomright'}).addTo(map);
 
-  var citySearch = new L.Control.Search({
-		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
-		jsonpParam: 'json_callback',
-		propertyName: 'display_name',
-		propertyLoc: ['lat','lon'],
-		autoCollapse: true,
-		autoType: false,
-		minLength: 2,
-    marker: false,
-    moveToLocation: function(latlng) {
-        map.setView(latlng, 12); // set the zoom
-    },
-	});
-  
-   citySearch.addTo(map);
-
-
+var geocoder = L.Control.geocoder({
+  geocoder: L.Control.Geocoder.nominatim({
+        geocodingQueryParams: {countrycodes: 'ph'}
+    }),
+  defaultMarkGeocode: false,
+  position: "topleft"
+})
+  .on('markgeocode', function(e) {
+    var bbox = e.geocode.bbox;
+    map.fitBounds(bbox);
+  })
+  .addTo(map);
 
 
   var loc_map = L.map('map-canvas').setView([14.65668, 121.07116], 18);
