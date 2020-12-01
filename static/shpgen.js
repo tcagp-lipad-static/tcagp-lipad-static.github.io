@@ -24,7 +24,7 @@ L.tileLayer(
 // add a marker in the given location
 // L.marker(center).addTo(map);
 
-tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
+tile_layer = L.tileLayer.wms('https://lipad-geoserver.dream.upd.edu.ph/geoserver/wms', {
     ptype: "gxp_wmsgetfeatureinfo",
     layers: 'lipad:philgrid',
     format: 'image/png',

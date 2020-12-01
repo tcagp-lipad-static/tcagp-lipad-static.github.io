@@ -10,7 +10,7 @@ window.onload=function(){
   var map = L.map('map', {center: center, zoom: 6,minZoom: 6, maxZoom: 18, maxBounds: bounds, maxBoundsViscosity: 1}).setView(center, 6);
   map.fitBounds(bounds);
 
-  tile_layer = L.tileLayer.wms('https://lipad.dream.upd.edu.ph/geoserver/wms', {
+  tile_layer = L.tileLayer.wms('https://lipad-geoserver.dream.upd.edu.ph/geoserver/wms', {
     ptype: "gxp_wmsgetfeatureinfo",
     layers: 'lipad:philgrid',
     format: 'image/png',
