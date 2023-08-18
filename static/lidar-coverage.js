@@ -99,14 +99,14 @@ var geocoder = L.Control.geocoder({
   .addTo(map);
 
 
-  var loc_map = L.map('map-canvas').setView([14.65668, 121.07116], 18);
+  var loc_map = L.map('map-canvas').setView([14.65658, 121.07006], 18);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy;' + n + ' <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
     maxZoom: 18,
   }).addTo(loc_map);
   // add marker to the maps
-  marker = L.marker([14.65652, 121.071]).addTo(loc_map);
+  marker = L.marker([14.6565835575189, 121.07006946741454]).addTo(loc_map);
   // add popup to the marker
-  marker.bindPopup("<b>UP TCAGP - DREAM/PHIL-LiDAR 1 Office").openPopup()
+  marker.bindPopup("<b>DGE & UP TCAGP").openPopup()
 
 }
