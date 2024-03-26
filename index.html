@@ -79,12 +79,20 @@
 				<button class="w3-cell-middle w3-padding-large w3-button" title="Data Store">RESOURCE MAPS <i class="fa fa-caret-down"></i></button>     
 				<div class="w3-cell-middle w3-dropdown-content w3-bar-block w3-card-4">
 					<a href="https://lipad-fmc.dream.upd.edu.ph/layers/?limit=100&offset=0&keywords__slug__in=flood-hazard-map" class="w3-cell-middle w3-bar-item w3-button">Flood Hazard Maps</a>
-					<a href="https://parmap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Agricultural Resource Maps</a>
-					<a href="https://coastmap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Aquatic Resource Maps</a>
-					<a href="https://frexls.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Forest Resource Maps</a>
-					<a href="https://phd.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Hydrological Datasets</a>
-					<a href="https://remap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Renewable Energy Resource Maps</a>
-					<a href="/#coming-soon" class="w3-cell-middle w3-bar-item w3-button">Syntethic Aperture Radar DEM</a>
+					<!--
+						<a href="https://parmap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Agricultural Resource Maps</a>
+						<a href="https://coastmap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Aquatic Resource Maps</a>
+						<a href="https://frexls.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Forest Resource Maps</a>
+						<a href="https://phd.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Hydrological Datasets</a>
+						<a href="https://remap.dream.upd.edu.ph/" class="w3-cell-middle w3-bar-item w3-button">Renewable Energy Resource Maps</a>
+						<a href="/#coming-soon" class="w3-cell-middle w3-bar-item w3-button">Syntethic Aperture Radar DEM</a>
+					-->
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Agricultural Resource Maps</a>
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Aquatic Resource Maps</a>
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Forest Resource Maps</a>
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Hydrological Datasets</a>
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Renewable Energy Resource Maps</a>
+					<a href="#requestdata" class="w3-cell-middle w3-bar-item w3-button">Syntethic Aperture Radar DEM</a>
 				</div>
 			</div>
 			<a href="/shapefilegen.html" class="w3-cell-middle w3-bar-item w3-button w3-padding-large w3-hide-small">GENERATE SHAPEFILE</a>
@@ -98,12 +106,20 @@
 			<a href="#requestdata" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">REQUEST LIDAR DATA </a>
 			<button class="w3-bar-item w3-button w3-padding-large" title="Data Store" onclick="myFunction()">RESOURCE MAPS <i class="fa fa-caret-down"></i></button>   
 			<a href="https://lipad-fmc.dream.upd.edu.ph/layers/?limit=100&offset=0&keywords__slug__in=flood-hazard-map" class="w3-padding-large w3-bar-item w3-button">Flood Hazard Maps</a>
+			<!--
 			<a href="https://parmap.dream.upd.edu.ph/" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Agricultural Resource Maps</a>
 			<a href="https://coastmap.dream.upd.edu.ph/" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Aquatic Resource Maps</a>
 			<a href="https://frexls.dream.upd.edu.ph/" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Forest Resource Maps</a>
 			<a href="https://phd.dream.upd.edu.ph/" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Hydrological Datasets</a>
 			<a href="https://remap.dream.upd.edu.ph/" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Renewable Energy Resource Maps</a>
 			<a href="#coming-soon" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Syntethic Aperture Radar DEM</a>
+			-->
+			<a href="#requestdata" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Agricultural Resource Maps</a>
+			<a href="#requestdata" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Aquatic Resource Maps</a>
+			<a href="#requestdata" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Forest Resource Maps</a>
+			<a href="#requestdata" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Hydrological Datasets</a>
+			<a href="#requestdata" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">Renewable Energy Resource Maps</a>
+			<a href="#requestdata" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Syntethic Aperture Radar DEM</a>
 			<a href="/shapefilegen.html" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">GENERATE SHAPEFILE</a>
 			<a href="#contact" class="w3-padding-large w3-bar-item w3-button" onclick="myFunction()">CONTACT</a>
 		</div>
@@ -178,7 +194,8 @@
 				<p>Flood Hazard Maps are still available at the <a href="https://lipad-fmc.dream.upd.edu.ph/layers/?limit=100&offset=0&keywords__slug__in=flood-hazard-map">LiPAD FMC website</a>, without registration. Please proceed to the FMC sub-website if you are interested on downloading Flood Hazard Maps. </p>
 				<hr>
 				<h3>Resource Maps</h3>
-				<p>Resource Maps are available on their respective portals produced by the components of the PHIL-LiDAR 2 Program. Please see the RESOURCE MAPS menu above if you are interested on obtaining resource maps.</p>
+				<!--<p>Resource Maps are available on their respective portals produced by the components of the PHIL-LiDAR 2 Program. Please see the RESOURCE MAPS menu above if you are interested on obtaining resource maps.</p> !-->
+				<p>Resource Maps produced by the components of the PHIL-LiDAR 2 Program are also available for request through the Manual Data Requests form below.</p>
 				<hr>
 				<h3>Manual Data Requests</h3>
 
